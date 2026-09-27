@@ -1,5 +1,38 @@
 # Scalable Web Application with ALB and Auto Scaling
 
+## Introduction
+
+This repository contains my solution for the **AWS Solutions Architect Associate** program project delivered through **Manara**. The project brief asks for a production-grade, scalable web application on AWS, built on an EC2-based architecture, and this repository documents the design and the reasoning behind it.
+
+The solution deploys a web application on **EC2 instances inside a custom VPC** with public and private subnets spread across **two Availability Zones**. High availability and scalability come from an **Application Load Balancer (ALB)** and an **Auto Scaling Group (ASG)**, while **Amazon CloudFront** caches static assets to reduce latency. A **Multi-AZ Amazon RDS** instance serves as the database backend, and all compute runs in private subnets with no direct internet exposure.
+
+Security is layered throughout the design: **AWS WAF** protects against OWASP Top 10 threats, **Security Groups** and private subnets limit network access, and **AWS Systems Manager Session Manager** replaces bastion hosts and SSH keys for administrative access. **Amazon Route 53** handles DNS, and **Amazon CloudWatch** with **Amazon SNS** provides monitoring and alerting, so administrators are notified when something goes wrong.
+
+The architecture is documented as two diagrams, each with a step-by-step flow and a justification of the design choices:
+
+1. **Client-to-Application flow:** how end users reach the application, and how administrators are alerted when issues occur.
+2. **Secure instance access with Systems Manager:** how administrators connect to EC2 instances privately through a VPC Endpoint, with no bastion host.
+
+### Key AWS services
+
+| Category | Services |
+|---|---|
+| Networking | VPC, Subnets, Route Tables, Internet Gateway, NAT Gateway, VPC Endpoints |
+| Compute | EC2, Auto Scaling Group, Launch Template |
+| Load balancing and edge | Application Load Balancer, CloudFront, Route 53 |
+| Security | AWS WAF, Security Groups, NACLs, IAM |
+| Database | Amazon RDS (Multi-AZ) |
+| Operations | Systems Manager (Session Manager), CloudWatch, SNS |
+
+### Learning outcomes demonstrated
+
+- Designing a VPC with correct subnet, route table, and NAT Gateway configuration
+- Building a highly available architecture across multiple Availability Zones
+- Configuring ALB listener rules and target group health checks
+- Implementing Auto Scaling with target tracking policies
+- Securing an application with WAF, Security Groups, and private subnets
+- Using Session Manager as a bastion-free access alternative
+
 A production-grade, highly available web application on AWS, built on EC2 inside a segmented VPC across two Availability Zones. The system is documented as **two complementary architecture diagrams**, each covering a distinct access path into the environment:
 
 1. **[Client → Application flow](#diagram-1--client-to-application-architecture)** — how end users reach the application, and how operators are notified if something breaks.
