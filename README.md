@@ -170,6 +170,7 @@ Both diagrams describe access into the **same underlying VPC and EC2 fleet** —
 .
 ├── README.md
 └── docs/
+    └── architecture.drawio                 # Diagrams drawio code
     └── images/
         ├── client-to-application.png       # Diagram 1
         └── session-manager-access.png      # Diagram 2
